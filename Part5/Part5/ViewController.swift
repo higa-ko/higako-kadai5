@@ -15,35 +15,26 @@ class ViewController: UIViewController {
     
     @IBAction func answerButton(_ sender: UIButton) {
         
-        let number1 = Double(textField1.text!) ?? 0
-        let number2 = Double(textField2.text!) ?? 0
-        var errorCheck = true
-        
-        
-        if textField1.text == "" {
-            alertDisplay(message: "割られる数を入力してください。")
-            errorCheck = false
+        guard let number1 = Double(textField1.text!) else {
+            displayAlert(message: "割られる数を入力してください。")
+            return
         }
         
-        if textField2.text == "" && errorCheck {
-            alertDisplay(message: "割る数を入力してください。")
-            errorCheck = false
+        guard let number2 = Double(textField2.text!) else {
+            displayAlert(message: "割る数を入力してください。")
+            return
         }
 
-        if number2 == 0 && errorCheck{
-            alertDisplay(message: "割る数に0を入力しないでください。")
-            errorCheck = false
+        guard number2 != 0 else {
+            displayAlert(message: "割る数に0を入力しないでください。")
+            return
         }
 
-        
-        if errorCheck {
-            answerLabel.text = String(number1 / number2)
-        }
+        answerLabel.text = String(number1 / number2)
     }
 
     //アラート表示用関数
-    private func alertDisplay(message : String) {
-        
+    private func displayAlert(message : String) {
         //アラート作成
         let alert = UIAlertController(title: "課題5", message: message, preferredStyle: .alert)
         
